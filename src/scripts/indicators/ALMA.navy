@@ -1,0 +1,33 @@
+
+// Navy ~ 0.2-lite
+// <ds>Arnaud Legoux Moving Average</ds>
+
+[INDICATOR name=ALMA, version=1.0.0]
+
+prop('length', { type: 'integer', def: 10 })
+prop('offset', { type: 'number', def: 0.9 })
+prop('sigma', { type: 'number', def: 5 })
+prop('color', { type: 'color', def: '#559de0' })
+prop('prec', { type: 'integer', def: autoPrec() })
+prop('zIndex', { type: 'integer', def: 0 })
+
+let $ = $props
+
+this.specs = {
+    name: `ALMA ${$.length} ${$.offset} ${$.sigma}`,
+    props: {
+        color: $props.color,
+    },
+    settings: {
+        precision: $props.prec,
+        zIndex: $props.zIndex
+    }
+}
+
+[UPDATE]
+
+let length = $props.length
+let offset = $props.offset
+let sigma = $props.sigma
+
+Spline(alma(close, length, offset, sigma), this.specs)

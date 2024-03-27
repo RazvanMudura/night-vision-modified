@@ -1,0 +1,29 @@
+
+// Navy ~ 0.2-lite
+// <ds>Bollinger Bands Width</ds>
+
+[INDICATOR name=BBW, version=1.0.0]
+
+prop('length', { type: 'integer', def: 21 })
+prop('stddev', { type: 'number', def: 2 })
+prop('color', { type: 'color', def: '#2cc6c9ab' })
+prop('prec', { type: 'integer', def: autoPrec() })
+prop('zIndex', { type: 'integer', def: 0 })
+
+this.specs = {
+    name: `BBW ${$props.length} ${$props.stddev}`,
+    props: {
+        color: $props.color,
+        backColor: $props.backColor,
+    },
+    settings: {
+        precision: $props.prec,
+        zIndex: $props.zIndex
+    }
+}
+
+[UPDATE]
+
+let length = $props.length
+let stddev = $props.stddev
+Spline(bbw(close, length, stddev), this.specs)

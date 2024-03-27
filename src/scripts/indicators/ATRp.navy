@@ -1,0 +1,26 @@
+
+// Navy ~ 0.2-lite
+// <ds>Average True Range, percentage</ds>
+
+[INDICATOR name=ATRp, version=1.0.0]
+
+prop('length', { type: 'integer', def: 15 })
+prop('color', { type: 'color', def: '#f44336' })
+prop('prec', { type: 'integer', def: autoPrec() })
+prop('zIndex', { type: 'integer', def: 0 })
+
+this.specs = {
+    name: 'ATR% ' + $props.length,
+    props: {
+        color: $props.color
+    },
+    settings: {
+        precision: $props.prec,
+        zIndex: $props.zIndex
+    }
+}
+
+[UPDATE]
+
+let k = 100 / close[0]
+Spline(atr($props.length)[0] * k, this.specs)
