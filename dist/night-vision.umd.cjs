@@ -11958,11 +11958,12 @@ If not the case just use 'lite' tag: ${VERSION}-lite`
       meta.init(props);
       scan.updatePanesHash();
       $$invalidate(1, layout = new Layout(chartProps, hub, meta));
-      if (Array.isArray(layout.grids))
+      if (Array.isArray(layout.grids)) {
         paneHeights = layout.grids.map((e) => e.height);
-      sizes = [];
-      for (let i = 0; i < layout.grids.length; i++) {
-        sizes.push(0);
+        sizes = [];
+        for (let i = 0; i < layout.grids.length; i++) {
+          sizes.push(0);
+        }
       }
     });
     onDestroy(() => {

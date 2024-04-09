@@ -88,12 +88,13 @@ onMount(() => {
 
     layout = new Layout(chartProps, hub, meta)
 
-    if (Array.isArray(layout.grids))
+    if (Array.isArray(layout.grids)) {
         paneHeights = layout.grids.map(e => e.height)
 
-    sizes = []
-    for (let i = 0; i < layout.grids.length; i++) {
-        sizes.push(0)
+        sizes = []
+        for (let i = 0; i < layout.grids.length; i++) {
+            sizes.push(0)
+        }
     }
 })
 
@@ -241,7 +242,7 @@ const dragSeparator = (event) => {
 
 
     layout = new Layout(chartProps, hub, meta, sizes)
-    
+
     if (Array.isArray(layout.grids))
         paneHeights = layout.grids.map(e => e.height)
 }

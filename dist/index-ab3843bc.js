@@ -6347,8 +6347,8 @@ class Input {
     });
   }
   async listeners() {
-    const Hamster = await import("./hamster-6dbd3370.js").then((n) => n.h);
-    const Hammer = await import("./hammer-ce7aeae4.js").then((n) => n.h);
+    const Hamster = await import("./hamster-15771c55.js").then((n) => n.h);
+    const Hammer = await import("./hammer-510387d0.js").then((n) => n.h);
     this.hm = Hamster.default(this.canvas);
     this.hm.wheel((event, delta) => this.mousezoom(-delta * 50, event));
     let mc = this.mc = new Hammer.Manager(this.canvas);
@@ -8347,7 +8347,7 @@ function instance$9($$self, $$props, $$invalidate) {
     }
   }
   async function listeners() {
-    const Hammer = await import("./hammer-ce7aeae4.js").then((n) => n.h);
+    const Hammer = await import("./hammer-510387d0.js").then((n) => n.h);
     mc = new Hammer.Manager(canvas);
     mc.add(new Hammer.Pan({
       direction: Hammer.DIRECTION_VERTICAL,
@@ -11935,11 +11935,12 @@ function instance$1($$self, $$props, $$invalidate) {
     meta.init(props);
     scan.updatePanesHash();
     $$invalidate(1, layout = new Layout(chartProps, hub, meta));
-    if (Array.isArray(layout.grids))
+    if (Array.isArray(layout.grids)) {
       paneHeights = layout.grids.map((e) => e.height);
-    sizes = [];
-    for (let i = 0; i < layout.grids.length; i++) {
-      sizes.push(0);
+      sizes = [];
+      for (let i = 0; i < layout.grids.length; i++) {
+        sizes.push(0);
+      }
     }
   });
   onDestroy(() => {
