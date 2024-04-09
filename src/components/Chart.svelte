@@ -87,7 +87,9 @@ onMount(() => {
 
 
     layout = new Layout(chartProps, hub, meta)
-    paneHeights = layout.grids.map(e => e.height)
+
+    if (Array.isArray(layout.grids))
+        paneHeights = layout.grids.map(e => e.height)
 
     sizes = []
     for (let i = 0; i < layout.grids.length; i++) {
@@ -156,7 +158,8 @@ function update(opt = {}, emit = true) {
     cursor = cursor // Trigger Svelte update
     layout = new Layout(chartProps, hub, meta, sizes)
 
-    paneHeights = layout.grids.map(e => e.height)
+    if (Array.isArray(layout.grids))
+        paneHeights = layout.grids.map(e => e.height)
 
     events.emit('update-pane', layout) // Update all panes
     events.emitSpec('botbar', 'update-bb', layout)
@@ -238,7 +241,9 @@ const dragSeparator = (event) => {
 
 
     layout = new Layout(chartProps, hub, meta, sizes)
-    paneHeights = layout.grids.map(e => e.height)
+    
+    if (Array.isArray(layout.grids))
+        paneHeights = layout.grids.map(e => e.height)
 }
 
 

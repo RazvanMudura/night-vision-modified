@@ -11958,7 +11958,8 @@ If not the case just use 'lite' tag: ${VERSION}-lite`
       meta.init(props);
       scan.updatePanesHash();
       $$invalidate(1, layout = new Layout(chartProps, hub, meta));
-      paneHeights = layout.grids.map((e) => e.height);
+      if (Array.isArray(layout.grids))
+        paneHeights = layout.grids.map((e) => e.height);
       sizes = [];
       for (let i = 0; i < layout.grids.length; i++) {
         sizes.push(0);
@@ -12012,7 +12013,8 @@ If not the case just use 'lite' tag: ${VERSION}-lite`
         return fullUpdate(opt);
       $$invalidate(15, cursor);
       $$invalidate(1, layout = new Layout(chartProps, hub, meta, sizes));
-      paneHeights = layout.grids.map((e) => e.height);
+      if (Array.isArray(layout.grids))
+        paneHeights = layout.grids.map((e) => e.height);
       events.emit("update-pane", layout);
       events.emitSpec("botbar", "update-bb", layout);
       if (emit)
@@ -12070,7 +12072,8 @@ If not the case just use 'lite' tag: ${VERSION}-lite`
       yMouseCords = event.y;
       sizes = sizes;
       $$invalidate(1, layout = new Layout(chartProps, hub, meta, sizes));
-      paneHeights = layout.grids.map((e) => e.height);
+      if (Array.isArray(layout.grids))
+        paneHeights = layout.grids.map((e) => e.height);
     };
     const diselectSeparator = () => {
       selectedPaneIndex = null;
