@@ -5366,7 +5366,8 @@ function GridMaker(id, specs, mainGrid = null) {
     id: () => id
   };
 }
-function Layout(props, hub, meta) {
+const minHeight$1 = 100;
+function Layout(props, hub, meta, sizes) {
   let chart = hub.chart;
   let offchart = hub.offchart;
   let panes = hub.panes().filter((x) => x.settings);
@@ -5403,7 +5404,7 @@ function Layout(props, hub, meta) {
     meta,
     props,
     settings: panes[i2].settings,
-    height: hs[i2]
+    height: sizes ? hs[i2] + sizes[i2] < minHeight$1 ? minHeight$1 : hs[i2] + sizes[i2] : hs[i2]
   });
   let mainGm = new GridMaker(
     hub.mainPaneId,
@@ -6346,8 +6347,8 @@ class Input {
     });
   }
   async listeners() {
-    const Hamster = await import("./hamster-830525aa.js").then((n) => n.h);
-    const Hammer = await import("./hammer-d6451213.js").then((n) => n.h);
+    const Hamster = await import("./hamster-8d00df43.js").then((n) => n.h);
+    const Hammer = await import("./hammer-ec221cdb.js").then((n) => n.h);
     this.hm = Hamster.default(this.canvas);
     this.hm.wheel((event, delta) => this.mousezoom(-delta * 50, event));
     let mc = this.mc = new Hammer.Manager(this.canvas);
@@ -7163,7 +7164,7 @@ function create_fragment$c(ctx) {
         /*rrStyle*/
         ctx[0]
       );
-      attr(div, "class", "nvjs-canvas-rendrer svelte-8n0n7w");
+      attr(div, "class", "nvjs-canvas-rendrer");
     },
     m(target, anchor) {
       insert(target, div, anchor);
@@ -7792,7 +7793,7 @@ function fade(node, { delay = 0, duration = 400, easing = identity } = {}) {
     css: (t) => `opacity: ${t * o}`
   };
 }
-function add_css$4(target) {
+function add_css$5(target) {
   append_styles(target, "svelte-16w6gr6", ".scale-selector.svelte-16w6gr6{position:absolute;bottom:5px;display:grid;justify-content:center;align-content:center}.scale-button.svelte-16w6gr6{border-radius:3px;text-align:center;user-select:none;margin:auto;margin-top:1px}.scale-button.svelte-16w6gr6:hover{filter:brightness(1.2)}");
 }
 function get_each_context$3(ctx, list, i) {
@@ -8091,7 +8092,7 @@ class ScaleSelector extends SvelteComponent {
         scales: 0,
         side: 8
       },
-      add_css$4
+      add_css$5
     );
   }
 }
@@ -8346,7 +8347,7 @@ function instance$9($$self, $$props, $$invalidate) {
     }
   }
   async function listeners() {
-    const Hammer = await import("./hammer-d6451213.js").then((n) => n.h);
+    const Hammer = await import("./hammer-ec221cdb.js").then((n) => n.h);
     mc = new Hammer.Manager(canvas);
     mc.add(new Hammer.Pan({
       direction: Hammer.DIRECTION_VERTICAL,
@@ -8733,7 +8734,7 @@ const icons = {
   close,
   edit
 };
-function add_css$3(target) {
+function add_css$4(target) {
   append_styles(target, "svelte-49cck0", ".nvjs-eye.svelte-49cck0{width:20px;height:20px;float:right;margin-right:2px;margin-left:7px}.nvjs-eye.svelte-49cck0:hover{filter:brightness(1.25)}");
 }
 function create_fragment$7(ctx) {
@@ -8955,7 +8956,7 @@ class LegendControls extends SvelteComponent {
         height: 9,
         update: 10
       },
-      add_css$3
+      add_css$4
     );
   }
   get update() {
@@ -8965,7 +8966,7 @@ class LegendControls extends SvelteComponent {
 const logo = [
   "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAVQAAAC0CAMAAAD8fySxAAAAAXNSR0IB2cksfwAAAAlwSFlzAAALEwAACxMBAJqcGAAAAvpQTFRFAAAA///////////////+/////////////////////////////v/////////////////////////////////////////////////////////////////////////////////+//////////7////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////7////////+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////+///////////+//////////////////////////////////7////+////poUcigAAAP50Uk5TAD1AGUAtKyYkC/+5/5qTrNlmOjU5b2nMT+EDZMFjRT//7MT/aI+NGhUIM+YFusm38+0s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"
 ];
-function add_css$2(target) {
+function add_css$3(target) {
   append_styles(target, "svelte-ccr182", ".nvjs-legend-line.svelte-ccr182{pointer-events:all;position:relative;user-select:none;border-radius:3px;padding:2px 5px;margin-bottom:2px;width:fit-content}.nvjs-logo.svelte-ccr182{width:35px;height:20px;float:left;margin-left:-5px;margin-right:2px;opacity:0.85}.nvjs-ll-data.svelte-ccr182{font-variant-numeric:tabular-nums}.nvjs-ll-value{margin-left:3px}.nvjs-ll-x{margin-left:3px}.nvjs-eye.svelte-ccr182{width:20px;height:20px;float:right;margin-right:2px;margin-left:7px}.nvjs-eye.svelte-ccr182:hover{filter:brightness(1.25)}.king-icon.svelte-ccr182{padding-left:8px;padding-right:8px;margin-right:4px;filter:grayscale()}");
 }
 function get_each_context_1(ctx, list, i) {
@@ -9011,7 +9012,7 @@ function create_if_block$3(ctx) {
   ctx[3] && create_if_block_2$1(ctx);
   let if_block4 = (
     /*hover*/
-    ctx[3] && create_if_block_1$1(ctx)
+    ctx[3] && create_if_block_1$2(ctx)
   );
   return {
     c() {
@@ -9173,7 +9174,7 @@ function create_if_block$3(ctx) {
             transition_in(if_block4, 1);
           }
         } else {
-          if_block4 = create_if_block_1$1(ctx2);
+          if_block4 = create_if_block_1$2(ctx2);
           if_block4.c();
           transition_in(if_block4, 1);
           if_block4.m(div, null);
@@ -9783,7 +9784,7 @@ function create_if_block_2$1(ctx) {
     }
   };
 }
-function create_if_block_1$1(ctx) {
+function create_if_block_1$2(ctx) {
   let legendcontrols;
   let current;
   let legendcontrols_props = {
@@ -10203,10 +10204,10 @@ function instance$6($$self, $$props, $$invalidate) {
 class LegendLine extends SvelteComponent {
   constructor(options) {
     super();
-    init(this, options, instance$6, create_fragment$6, safe_not_equal, { gridId: 0, ov: 1, props: 2, layout: 25 }, add_css$2, [-1, -1]);
+    init(this, options, instance$6, create_fragment$6, safe_not_equal, { gridId: 0, ov: 1, props: 2, layout: 25 }, add_css$3, [-1, -1]);
   }
 }
-function add_css$1(target) {
+function add_css$2(target) {
   append_styles(target, "svelte-16ib1si", ".nvjs-legend.svelte-16ib1si{pointer-events:none}");
 }
 function get_each_context$1(ctx, list, i) {
@@ -10546,7 +10547,7 @@ function instance$5($$self, $$props, $$invalidate) {
 class Legend extends SvelteComponent {
   constructor(options) {
     super();
-    init(this, options, instance$5, create_fragment$5, safe_not_equal, { id: 0, props: 1, main: 6, layout: 2 }, add_css$1);
+    init(this, options, instance$5, create_fragment$5, safe_not_equal, { id: 0, props: 1, main: 6, layout: 2 }, add_css$2);
   }
 }
 function create_if_block$1(ctx) {
@@ -10613,7 +10614,7 @@ function create_if_block$1(ctx) {
   }
   current_block_type_index = select_block_type(ctx);
   if_block0 = if_blocks[current_block_type_index] = if_block_creators[current_block_type_index](ctx);
-  const if_block_creators_1 = [create_if_block_1, create_else_block$1];
+  const if_block_creators_1 = [create_if_block_1$1, create_else_block$1];
   const if_blocks_1 = [];
   function select_block_type_1(ctx2, dirty) {
     if (
@@ -10955,7 +10956,7 @@ function create_else_block$1(ctx) {
     }
   };
 }
-function create_if_block_1(ctx) {
+function create_if_block_1$1(ctx) {
   let sidebar;
   let current;
   let sidebar_props = {
@@ -11508,10 +11509,13 @@ class NoDataStub extends SvelteComponent {
     init(this, options, instance$2, create_fragment$2, safe_not_equal, { props: 1 });
   }
 }
+function add_css$1(target) {
+  append_styles(target, "svelte-ex1izl", ".pane-separator.svelte-ex1izl{height:3px !important;width:100% !important;background-color:rgb(80, 80, 80);display:block;position:absolute;z-index:100;cursor:n-resize;transition:0.1s}.pane-separator.svelte-ex1izl:hover{background-color:rgb(148, 148, 148);transition:0.1s}.nvjs-chart.svelte-ex1izl{height:100% !important}");
+}
 function get_each_context(ctx, list, i) {
   const child_ctx = ctx.slice();
-  child_ctx[25] = list[i];
-  child_ctx[27] = i;
+  child_ctx[33] = list[i];
+  child_ctx[35] = i;
   return child_ctx;
 }
 function create_else_block(ctx) {
@@ -11531,7 +11535,7 @@ function create_else_block(ctx) {
     },
     p(ctx2, dirty) {
       const nodatastub_changes = {};
-      if (dirty & /*props*/
+      if (dirty[0] & /*props*/
       1)
         nodatastub_changes.props = /*props*/
         ctx2[0];
@@ -11598,8 +11602,8 @@ function create_if_block(ctx) {
       current = true;
     },
     p(ctx2, dirty) {
-      if (dirty & /*layout, chartProps, hub*/
-      14) {
+      if (dirty[0] & /*selectSeparator, hub, layout, chartProps*/
+      30) {
         each_value = ensure_array_like(
           /*hub*/
           ctx2[3].panes()
@@ -11624,11 +11628,11 @@ function create_if_block(ctx) {
         check_outros();
       }
       const botbar_changes = {};
-      if (dirty & /*chartProps*/
+      if (dirty[0] & /*chartProps*/
       4)
         botbar_changes.props = /*chartProps*/
         ctx2[2];
-      if (dirty & /*layout*/
+      if (dirty[0] & /*layout*/
       2)
         botbar_changes.layout = /*layout*/
         ctx2[1];
@@ -11660,20 +11664,65 @@ function create_if_block(ctx) {
     }
   };
 }
+function create_if_block_1(ctx) {
+  let span;
+  let mounted;
+  let dispose;
+  function mousedown_handler(...args) {
+    return (
+      /*mousedown_handler*/
+      ctx[16](
+        /*i*/
+        ctx[35],
+        ...args
+      )
+    );
+  }
+  return {
+    c() {
+      span = element("span");
+      attr(span, "class", "pane-separator svelte-ex1izl");
+    },
+    m(target, anchor) {
+      insert(target, span, anchor);
+      if (!mounted) {
+        dispose = listen(span, "mousedown", mousedown_handler);
+        mounted = true;
+      }
+    },
+    p(new_ctx, dirty) {
+      ctx = new_ctx;
+    },
+    d(detaching) {
+      if (detaching) {
+        detach(span);
+      }
+      mounted = false;
+      dispose();
+    }
+  };
+}
 function create_each_block(ctx) {
   let pane_1;
+  let t;
+  let show_if = (
+    /*i*/
+    ctx[35] < /*hub*/
+    ctx[3].panes().length - 1
+  );
+  let if_block_anchor;
   let current;
   pane_1 = new Pane({
     props: {
       id: (
         /*i*/
-        ctx[27]
+        ctx[35]
       ),
       layout: (
         /*layout*/
         ctx[1].grids[
           /*i*/
-          ctx[27]
+          ctx[35]
         ]
       ),
       props: (
@@ -11682,33 +11731,44 @@ function create_each_block(ctx) {
       ),
       main: (
         /*pane*/
-        ctx[25] === /*hub*/
+        ctx[33] === /*hub*/
         ctx[3].chart
       )
     }
   });
+  let if_block = show_if && create_if_block_1(ctx);
   return {
     c() {
       create_component(pane_1.$$.fragment);
+      t = space();
+      if (if_block)
+        if_block.c();
+      if_block_anchor = empty();
     },
     m(target, anchor) {
       mount_component(pane_1, target, anchor);
+      insert(target, t, anchor);
+      if (if_block)
+        if_block.m(target, anchor);
+      insert(target, if_block_anchor, anchor);
       current = true;
     },
     p(ctx2, dirty) {
       const pane_1_changes = {};
-      if (dirty & /*layout*/
+      if (dirty[0] & /*layout*/
       2)
         pane_1_changes.layout = /*layout*/
         ctx2[1].grids[
           /*i*/
-          ctx2[27]
+          ctx2[35]
         ];
-      if (dirty & /*chartProps*/
+      if (dirty[0] & /*chartProps*/
       4)
         pane_1_changes.props = /*chartProps*/
         ctx2[2];
       pane_1.$set(pane_1_changes);
+      if (show_if)
+        if_block.p(ctx2, dirty);
     },
     i(local) {
       if (current)
@@ -11721,7 +11781,13 @@ function create_each_block(ctx) {
       current = false;
     },
     d(detaching) {
+      if (detaching) {
+        detach(t);
+        detach(if_block_anchor);
+      }
       destroy_component(pane_1, detaching);
+      if (if_block)
+        if_block.d(detaching);
     }
   };
 }
@@ -11730,6 +11796,8 @@ function create_fragment$1(ctx) {
   let current_block_type_index;
   let if_block;
   let current;
+  let mounted;
+  let dispose;
   const if_block_creators = [create_if_block, create_else_block];
   const if_blocks = [];
   function select_block_type(ctx2, dirty) {
@@ -11747,14 +11815,31 @@ function create_fragment$1(ctx) {
     c() {
       div = element("div");
       if_block.c();
-      attr(div, "class", "nvjs-chart");
+      attr(div, "class", "nvjs-chart svelte-ex1izl");
     },
     m(target, anchor) {
       insert(target, div, anchor);
       if_blocks[current_block_type_index].m(div, null);
       current = true;
+      if (!mounted) {
+        dispose = [
+          listen(
+            div,
+            "mousemove",
+            /*dragSeparator*/
+            ctx[5]
+          ),
+          listen(
+            div,
+            "mouseup",
+            /*diselectSeparator*/
+            ctx[6]
+          )
+        ];
+        mounted = true;
+      }
     },
-    p(ctx2, [dirty]) {
+    p(ctx2, dirty) {
       let previous_block_index = current_block_type_index;
       current_block_type_index = select_block_type(ctx2);
       if (current_block_type_index === previous_block_index) {
@@ -11791,9 +11876,12 @@ function create_fragment$1(ctx) {
         detach(div);
       }
       if_blocks[current_block_type_index].d();
+      mounted = false;
+      run_all(dispose);
     }
   };
 }
+const minHeight = 100;
 function instance$1($$self, $$props, $$invalidate) {
   let chartProps;
   let { props = {} } = $$props;
@@ -11838,6 +11926,8 @@ function instance$1($$self, $$props, $$invalidate) {
   events.on("chart:range-changed", onRangeChanged);
   events.on("chart:update-layout", update2);
   events.on("chart:full-update", fullUpdate);
+  let sizes = [];
+  let paneHeights = [];
   onMount(() => {
     hub.calcSubset(range);
     hub.detectMain();
@@ -11845,13 +11935,18 @@ function instance$1($$self, $$props, $$invalidate) {
     meta.init(props);
     scan.updatePanesHash();
     $$invalidate(1, layout = new Layout(chartProps, hub, meta));
+    paneHeights = layout.grids.map((e) => e.height);
+    sizes = [];
+    for (let i = 0; i < layout.grids.length; i++) {
+      sizes.push(0);
+    }
   });
   onDestroy(() => {
     events.off("chart");
   });
   function onCursorChanged($cursor, emit = true) {
     if ($cursor.mode)
-      $$invalidate(12, cursor.mode = $cursor.mode, cursor);
+      $$invalidate(15, cursor.mode = $cursor.mode, cursor);
     if (cursor.mode !== "explore") {
       cursor.xSync(hub, layout, chartProps, $cursor);
       if ($cursor.visible === false) {
@@ -11865,7 +11960,7 @@ function instance$1($$self, $$props, $$invalidate) {
   function onCursorLocked(state) {
     if (cursor.scrollLock && state)
       return;
-    $$invalidate(12, cursor.locked = state, cursor);
+    $$invalidate(15, cursor.locked = state, cursor);
   }
   function onRangeChanged($range, emit = true) {
     if (emit)
@@ -11892,8 +11987,9 @@ function instance$1($$self, $$props, $$invalidate) {
       scan.updatePanesHash();
     if (scan.panesChanged())
       return fullUpdate(opt);
-    $$invalidate(12, cursor);
-    $$invalidate(1, layout = new Layout(chartProps, hub, meta));
+    $$invalidate(15, cursor);
+    $$invalidate(1, layout = new Layout(chartProps, hub, meta, sizes));
+    paneHeights = layout.grids.map((e) => e.height);
     events.emit("update-pane", layout);
     events.emitSpec("botbar", "update-bb", layout);
     if (emit)
@@ -11901,8 +11997,8 @@ function instance$1($$self, $$props, $$invalidate) {
   }
   function fullUpdate(opt = {}) {
     let prevIbMode = scan.ibMode;
-    $$invalidate(9, interval = scan.detectInterval());
-    $$invalidate(10, timeFrame = scan.getTimeframe());
+    $$invalidate(12, interval = scan.detectInterval());
+    $$invalidate(13, timeFrame = scan.getTimeframe());
     let ibc = scan.ibMode !== prevIbMode;
     if (!range.length || opt.resetRange || ibc) {
       rangeUpdate(scan.defaultRange());
@@ -11919,7 +12015,7 @@ function instance$1($$self, $$props, $$invalidate) {
     events.emit("remake-grid");
   }
   function rangeUpdate($range) {
-    $$invalidate(11, range = $range);
+    $$invalidate(14, range = $range);
     $$invalidate(
       2,
       chartProps.range = range,
@@ -11927,13 +12023,44 @@ function instance$1($$self, $$props, $$invalidate) {
       chartProps
     );
   }
+  let selectedPaneIndex = null;
+  let yMouseCords = 0;
+  const selectSeparator = (event, index) => {
+    selectedPaneIndex = index;
+    yMouseCords = event.y;
+  };
+  const dragSeparator = (event) => {
+    if (selectedPaneIndex === null)
+      return;
+    if (event.y > yMouseCords) {
+      if (paneHeights[selectedPaneIndex + 1] !== minHeight)
+        sizes[selectedPaneIndex] += event.y - yMouseCords;
+      if (paneHeights[selectedPaneIndex + 1] > minHeight)
+        sizes[selectedPaneIndex + 1] += -(event.y - yMouseCords);
+    }
+    if (event.y < yMouseCords) {
+      if (paneHeights[selectedPaneIndex] > minHeight)
+        sizes[selectedPaneIndex] += -(yMouseCords - event.y);
+      if (paneHeights[selectedPaneIndex] !== minHeight)
+        sizes[selectedPaneIndex + 1] += yMouseCords - event.y;
+    }
+    yMouseCords = event.y;
+    sizes = sizes;
+    $$invalidate(1, layout = new Layout(chartProps, hub, meta, sizes));
+    paneHeights = layout.grids.map((e) => e.height);
+  };
+  const diselectSeparator = () => {
+    selectedPaneIndex = null;
+    yMouseCords = 0;
+  };
+  const mousedown_handler = (i, event) => selectSeparator(event, i);
   $$self.$$set = ($$props2) => {
     if ("props" in $$props2)
       $$invalidate(0, props = $$props2.props);
   };
   $$self.$$.update = () => {
-    if ($$self.$$.dirty & /*interval, timeFrame, range, cursor, props*/
-    7681) {
+    if ($$self.$$.dirty[0] & /*interval, timeFrame, range, cursor, props*/
+    61441) {
       $$invalidate(2, chartProps = Object.assign({ interval, timeFrame, range, ctx, cursor }, props));
     }
   };
@@ -11942,6 +12069,9 @@ function instance$1($$self, $$props, $$invalidate) {
     layout,
     chartProps,
     hub,
+    selectSeparator,
+    dragSeparator,
+    diselectSeparator,
     getLayout,
     getRange,
     getCursor,
@@ -11950,35 +12080,45 @@ function instance$1($$self, $$props, $$invalidate) {
     interval,
     timeFrame,
     range,
-    cursor
+    cursor,
+    mousedown_handler
   ];
 }
 class Chart extends SvelteComponent {
   constructor(options) {
     super();
-    init(this, options, instance$1, create_fragment$1, safe_not_equal, {
-      props: 0,
-      getLayout: 4,
-      getRange: 5,
-      getCursor: 6,
-      setRange: 7,
-      setCursor: 8
-    });
+    init(
+      this,
+      options,
+      instance$1,
+      create_fragment$1,
+      safe_not_equal,
+      {
+        props: 0,
+        getLayout: 7,
+        getRange: 8,
+        getCursor: 9,
+        setRange: 10,
+        setCursor: 11
+      },
+      add_css$1,
+      [-1, -1]
+    );
   }
   get getLayout() {
-    return this.$$.ctx[4];
-  }
-  get getRange() {
-    return this.$$.ctx[5];
-  }
-  get getCursor() {
-    return this.$$.ctx[6];
-  }
-  get setRange() {
     return this.$$.ctx[7];
   }
-  get setCursor() {
+  get getRange() {
     return this.$$.ctx[8];
+  }
+  get getCursor() {
+    return this.$$.ctx[9];
+  }
+  get setRange() {
+    return this.$$.ctx[10];
+  }
+  get setCursor() {
+    return this.$$.ctx[11];
   }
 }
 function add_css(target) {

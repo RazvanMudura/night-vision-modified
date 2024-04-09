@@ -33628,5 +33628,24 @@
                 }
             }
         }]
+    }, {
+        "scripts": [{
+            "type": "RSI",
+            "settings": {
+                "execOrder": 1,
+                "execOnRange": false,
+                "execInterval": 0
+            },
+            "props": {
+                "length": 14
+            },
+            "overlay": {
+                "name": "RSI, 14 (by script)",
+                "settings": {
+                    "showLegend": true,
+                    "precision": 3
+                }
+            }
+        }]
     }]
 }

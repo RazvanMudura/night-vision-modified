@@ -55,12 +55,11 @@ let chart = null
 onMount(() => {
     chart = new NightVision('chart-container', {
         data: data,
-        //autoResize: true,
-        //indexBased: true
+        autoResize: true,
     })
 
     // chart.data.panes[0].overlays[0].settings.timeFrame = "D1"
-    //chart.data = data2
+    // chart.data = data2
     window.chart = chart
     window.stack = stack
 

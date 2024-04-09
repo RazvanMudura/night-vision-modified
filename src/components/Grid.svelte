@@ -38,11 +38,13 @@ let renderers = []
 let input = null
 let keyboard = null
 
+
 // EVENT INTEFACE
 events.on(`grid-${id}:update-grid`, update)
 events.on(`grid-${id}:remake-grid`, make)
 events.on(`grid-${id}:propagate`, propagate)
 events.on(`grid-${id}:run-grid-task`, onTask)
+
 
 $:style = `
     width: ${layout.width}px;
@@ -50,6 +52,7 @@ $:style = `
     background: ${props.colors.back};
     margin-left: ${layout.sbMax[0]}px;
 `
+
 
 onMount(() => {
     make('mounted')
@@ -174,9 +177,11 @@ function mergeByCtx() {
 // Update all renderers
 function update($layout = layout) {
     layout = $layout
+
     if (input) input.layout = layout
     for (var l of layers) {
         // Update environment variables
+
         l.env.update(l.ovSrc, layout, props)
         l.update()
     }
@@ -211,14 +216,15 @@ function onTask(event) {
 }
 
 </script>
-<style>
-</style>
+
+
 <div class="nvjs-grid" {style}>
     {#each renderers as rr, i}
         {#if rr.ctxType === 'Canvas'}
             <Canvas {id} bind:this={rr.ref}
                 layout={layout}
-                props={props} rr={rr}/>
+                props={props} rr={rr}
+            />
         {/if}
     {/each}
 </div>

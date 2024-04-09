@@ -4,7 +4,6 @@
 import Utils from './utils.js'
 
 function setup(id, w, h) {
-
     let canvas = document.getElementById(id)
     let dpr = window.devicePixelRatio || 1
     canvas.style.width = `${w}px`
@@ -25,15 +24,17 @@ function setup(id, w, h) {
         Utils.measureText(ctx, text, nvjsId)
 
     return [canvas, ctx]
-
 }
 
 function resize(canvas, ctx, w, h) {
     let dpr = window.devicePixelRatio || 1
     canvas.style.width = `${w}px`
     canvas.style.height = `${h}px`
+
+
     if (dpr < 1) dpr = 1
     var rect = canvas.getBoundingClientRect()
+
     canvas.width = rect.width * dpr
     canvas.height = rect.height * dpr
     ctx.scale(dpr, dpr)

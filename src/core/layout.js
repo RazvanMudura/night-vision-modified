@@ -5,11 +5,15 @@ import Utils from '../stuff/utils.js'
 import math from '../stuff/math.js'
 import logScale from './logScale.js'
 
-function Layout(props, hub, meta) {
 
+
+const minHeight = 100
+
+function Layout(props, hub, meta, sizes) {
     let chart = hub.chart
     let offchart = hub.offchart
     let panes = hub.panes().filter(x => x.settings)
+
 
     if (!chart) return {}
 
@@ -56,13 +60,20 @@ function Layout(props, hub, meta) {
     const hs = gridHs()
     let specs = i => ({
         hub, meta, props, settings: panes[i].settings,
-        height: hs[i]
+        height: sizes ? 
+            hs[i] + sizes[i] < minHeight ? 
+            minHeight : hs[i] + sizes[i] : 
+        hs[i]
     })
+
     let mainGm = new GridMaker(
         hub.mainPaneId,
         specs(hub.mainPaneId)
     )
+
+
     let gms = [mainGm]
+
     for (var [i, pane] of panes.entries()) {
         if (i !== hub.mainPaneId) {
             gms.push(new GridMaker(
@@ -70,6 +81,8 @@ function Layout(props, hub, meta) {
             )
         }
     }
+
+
 
     // Max sidebar among all grinds
     // (for left & right side)
@@ -81,15 +94,20 @@ function Layout(props, hub, meta) {
     let grids = [], offset = 0
 
     // Create grids (first should be created the main grid)
+
     for (var i = 0; i < gms.length; i++) {
         let id = gms[i].id()
         gms[i].setMaxSidebar(sb)
         grids[id] = gms[i].create()
     }
+
+
     for (var i = 0; i < grids.length; i++) {
         grids[i].offset = offset
         offset += grids[i].height
     }
+
+
 
     return {
         grids: grids,

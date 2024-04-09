@@ -74,6 +74,7 @@ $:props = {
     //skin,
     timezone
 }
+
 $:style = `
     width: ${props.width}px;
     height: ${props.height}px;

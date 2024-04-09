@@ -38,6 +38,7 @@ $:width = layout.width
 $:height = layout.height
 $:resizeWatch(width, height)
 
+
 let canvas // Canvas ref
 let ctx // Canvas context
 let input // Input attacher to the renderer
@@ -78,14 +79,15 @@ function setup() {
 }
 
 function update($layout = layout) {
-
     layout = $layout
 
     if (!ctx || !layout) return
 
     ctx.clearRect(0, 0, canvas.width, canvas.height)
+
     //if (this.$p.shaders.length) this.apply_shaders()
     rr.layers.forEach(l => {
+
         if (!l.display) return
         ctx.save()
         let r = l.overlay
@@ -93,6 +95,7 @@ function update($layout = layout) {
         if (l.opacity) ctx.globalAlpha = l.opacity
         try {
             r.draw(ctx)
+
         } catch(e) {
             console.log(`Layer ${id}.${l.id}`, e)
         }
@@ -124,15 +127,14 @@ function upperBorder() {
 // TODO: potential performance improvement
 function resizeWatch() {
     if (!canvas) return
+    
     dpr.resize(canvas, ctx, layout.width, layout.height)
     update()
 }
 
 </script>
-<style>
-.nvjs-canvas-rendrer {}
-</style>
-<div id={rrId} style={rrStyle}
-    class="nvjs-canvas-rendrer">
+
+
+<div id={rrId} style={rrStyle} class="nvjs-canvas-rendrer">
     <canvas id={canvasId}></canvas>
 </div>

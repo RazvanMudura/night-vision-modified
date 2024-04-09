@@ -70,8 +70,12 @@ events.on('chart:range-changed', onRangeChanged)
 events.on('chart:update-layout', update)
 events.on('chart:full-update', fullUpdate)
 
-onMount(() => {
 
+let sizes = []
+let paneHeights = []
+
+
+onMount(() => {
     hub.calcSubset(range)
     hub.detectMain()
     hub.loadScripts(range, scan.tf, true)
@@ -79,10 +83,18 @@ onMount(() => {
 
     scan.updatePanesHash()
 
-    layout = new Layout(chartProps, hub, meta)
 
-    // console.log(layout) // DEBUG
+
+
+    layout = new Layout(chartProps, hub, meta)
+    paneHeights = layout.grids.map(e => e.height)
+
+    sizes = []
+    for (let i = 0; i < layout.grids.length; i++) {
+        sizes.push(0)
+    }
 })
+
 
 onDestroy(() => {
     // Clean-up event listeners on 'chart' component
@@ -142,9 +154,13 @@ function update(opt = {}, emit = true) {
     if (opt.updateHash) scan.updatePanesHash()
     if (scan.panesChanged()) return fullUpdate(opt)
     cursor = cursor // Trigger Svelte update
-    layout = new Layout(chartProps, hub, meta)
+    layout = new Layout(chartProps, hub, meta, sizes)
+
+    paneHeights = layout.grids.map(e => e.height)
+
     events.emit('update-pane', layout) // Update all panes
     events.emitSpec('botbar', 'update-bb', layout)
+
     if (emit) events.emit('$chart-update')
 }
 
@@ -180,18 +196,84 @@ function rangeUpdate($range) {
     chartProps.range = range // Instant update
 }
 
+
+
+let selectedPaneIndex = null
+let yMouseCords = 0
+const minHeight = 100
+
+
+const selectSeparator = (event, index) => {
+    selectedPaneIndex = index
+    yMouseCords = event.y
+}
+
+
+
+
+
+
+const dragSeparator = (event) => {
+    if (selectedPaneIndex === null) return
+
+    if (event.y > yMouseCords) {
+        if (paneHeights[selectedPaneIndex + 1] !== minHeight)
+            sizes[selectedPaneIndex] += (event.y - yMouseCords)
+
+        if (paneHeights[selectedPaneIndex + 1] > minHeight)
+            sizes[selectedPaneIndex + 1] += -(event.y - yMouseCords)
+    } 
+
+    if (event.y < yMouseCords) {
+        if (paneHeights[selectedPaneIndex] > minHeight)
+            sizes[selectedPaneIndex] += -(yMouseCords - event.y)
+
+        if (paneHeights[selectedPaneIndex] !== minHeight)
+            sizes[selectedPaneIndex + 1] += (yMouseCords - event.y)        
+    }
+
+
+    yMouseCords = event.y
+    sizes = sizes
+
+
+    layout = new Layout(chartProps, hub, meta, sizes)
+    paneHeights = layout.grids.map(e => e.height)
+}
+
+
+const diselectSeparator = () => {
+    selectedPaneIndex = null
+    yMouseCords = 0
+}
+
+
 </script>
-<style>
-</style>
+
 {#key chartRR} <!-- Full chart re-render -->
-<div class="nvjs-chart" >
+<!-- svelte-ignore a11y-click-events-have-key-events -->
+<!-- svelte-ignore a11y-no-static-element-interactions -->
+
+<div class="nvjs-chart" 
+    on:mousemove={dragSeparator}
+    on:mouseup={diselectSeparator}
+>
     {#if layout && layout.main}
         {#each hub.panes() as pane, i}
-    	<Pane id={i}
-            layout={layout.grids[i]}
-            props={chartProps}
-            main={pane === hub.chart}
-        />
+            <Pane id={i}
+                layout={layout.grids[i]}
+                props={chartProps}
+                main={pane === hub.chart}
+            />
+
+            {#if i < hub.panes().length - 1}
+                <!-- svelte-ignore a11y-click-events-have-key-events -->
+                <!-- svelte-ignore a11y-no-static-element-interactions -->
+                <span 
+                    class="pane-separator" 
+                    on:mousedown={(event) => selectSeparator(event, i)}
+                ></span>
+            {/if}
         {/each}
         <Botbar props={chartProps} {layout}/>
     {:else}
@@ -199,3 +281,26 @@ function rangeUpdate($range) {
     {/if}
 </div>
 {/key}
+
+
+<style>
+    .pane-separator {
+        height: 3px !important;
+        width: 100% !important;
+        background-color: rgb(80, 80, 80);
+        display: block;
+        position: absolute;
+        z-index: 100;
+        cursor: n-resize;
+        transition: 0.1s;
+    }
+
+    .pane-separator:hover {
+        background-color: rgb(148, 148, 148);
+        transition: 0.1s;
+    }
+
+    .nvjs-chart {
+        height: 100% !important;
+    }
+</style>
