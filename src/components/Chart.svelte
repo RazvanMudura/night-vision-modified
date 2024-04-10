@@ -99,7 +99,6 @@ onMount(() => {
     }
 
 
-    console.log("PANE NUMBER", hub.panes().length - 1)
 })
 
 
@@ -171,6 +170,8 @@ function update(opt = {}, emit = true) {
     events.emitSpec('botbar', 'update-bb', layout)
 
     if (emit) events.emit('$chart-update')
+
+    console.log("- - - PANE NUMBER", hub.panes().length - 1)
 }
 
 // Full update when the dataset changed completely

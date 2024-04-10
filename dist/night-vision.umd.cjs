@@ -11997,7 +11997,6 @@ If not the case just use 'lite' tag: ${VERSION}-lite`
           sizes.push(0);
         }
       }
-      console.log("PANE NUMBER", hub.panes().length - 1);
     });
     onDestroy(() => {
       events.off("chart");
@@ -12053,6 +12052,7 @@ If not the case just use 'lite' tag: ${VERSION}-lite`
       events.emitSpec("botbar", "update-bb", layout);
       if (emit)
         events.emit("$chart-update");
+      console.log("- - - PANE NUMBER", hub.panes().length - 1);
     }
     function fullUpdate(opt = {}) {
       let prevIbMode = scan.ibMode;
