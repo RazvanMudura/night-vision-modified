@@ -60,13 +60,20 @@ function Layout(props, hub, meta, sizes) {
 
     //  Place all grids in the right order
     const hs = gridHs()
-    let specs = i => ({
-        hub, meta, props, settings: panes[i].settings,
-        height: sizes ? 
-            hs[i] + sizes[i] < minHeight ? 
-            minHeight : hs[i] + sizes[i] : 
-        hs[i]
-    })
+
+
+    let specs = i => {
+        
+        console.log(hs[i], sizes[i], minHeight)
+
+        return ({
+            hub, meta, props, settings: panes[i].settings,
+            height: sizes ? 
+                hs[i] + sizes[i] < minHeight ? 
+                minHeight : hs[i] + sizes[i] : 
+            hs[i]
+        })
+    }
 
     let mainGm = new GridMaker(
         hub.mainPaneId,
@@ -77,8 +84,6 @@ function Layout(props, hub, meta, sizes) {
     let gms = [mainGm]
 
     for (var [i, pane] of panes.entries()) {
-        console.log(i, specs(i).height)
-
         if (i !== hub.mainPaneId) {
             gms.push(new GridMaker(
                 i, specs(i), mainGm.getLayout())

@@ -160,8 +160,6 @@ function update(opt = {}, emit = true) {
     cursor = cursor // Trigger Svelte update
 
     layout = new Layout(chartProps, hub, meta, sizes)
-    console.log(layout.grids)
-
 
     if (Array.isArray(layout.grids))
         paneHeights = layout.grids.map(e => e.height)

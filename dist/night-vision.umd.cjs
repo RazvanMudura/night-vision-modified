@@ -5422,20 +5422,22 @@ If not the case just use 'lite' tag: ${VERSION}-lite`
       return hs2;
     }
     const hs = gridHs();
-    let specs = (i2) => ({
-      hub,
-      meta,
-      props,
-      settings: panes[i2].settings,
-      height: sizes ? hs[i2] + sizes[i2] < minHeight$1 ? minHeight$1 : hs[i2] + sizes[i2] : hs[i2]
-    });
+    let specs = (i2) => {
+      console.log(hs[i2], sizes[i2], minHeight$1);
+      return {
+        hub,
+        meta,
+        props,
+        settings: panes[i2].settings,
+        height: sizes ? hs[i2] + sizes[i2] < minHeight$1 ? minHeight$1 : hs[i2] + sizes[i2] : hs[i2]
+      };
+    };
     let mainGm = new GridMaker(
       hub.mainPaneId,
       specs(hub.mainPaneId)
     );
     let gms = [mainGm];
     for (var [i, pane] of panes.entries()) {
-      console.log(i, specs(i).height);
       if (i !== hub.mainPaneId) {
         gms.push(
           new GridMaker(
@@ -12015,7 +12017,6 @@ If not the case just use 'lite' tag: ${VERSION}-lite`
         return fullUpdate(opt);
       $$invalidate(15, cursor);
       $$invalidate(1, layout = new Layout(chartProps, hub, meta, sizes));
-      console.log(layout.grids);
       if (Array.isArray(layout.grids))
         paneHeights = layout.grids.map((e) => e.height);
       events.emit("update-pane", layout);
