@@ -75,6 +75,9 @@ function Layout(props, hub, meta, sizes) {
             }
         }
 
+
+        console.log("aici", i, paneHeight)
+
              
         return ({
             hub, meta, props, settings: panes[i].settings,

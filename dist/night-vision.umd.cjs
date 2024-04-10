@@ -5434,6 +5434,7 @@ If not the case just use 'lite' tag: ${VERSION}-lite`
           paneHeight = hs[i2] + sizes[i2];
         }
       }
+      console.log("aici", i2, paneHeight);
       return {
         hub,
         meta,
