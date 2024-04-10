@@ -203,7 +203,7 @@ function rangeUpdate($range) {
 }
 
 
-
+let activeSeparator = null
 let selectedPaneIndex = null
 let yMouseCords = 0
 const minHeight = 100
@@ -212,6 +212,7 @@ const minHeight = 100
 const selectSeparator = (event, index) => {
     selectedPaneIndex = index
     yMouseCords = event.y
+    activeSeparator = index
 }
 
 
@@ -252,8 +253,10 @@ const dragSeparator = (event) => {
 
 const diselectSeparator = () => {
     selectedPaneIndex = null
+    activeSeparator = null
     yMouseCords = 0
 }
+
 
 
 </script>
@@ -279,6 +282,7 @@ const diselectSeparator = () => {
                 <!-- svelte-ignore a11y-no-static-element-interactions -->
                 <span 
                     class="pane-separator" 
+                    class:separator-active={activeSeparator === i}
                     on:mousedown={(event) => selectSeparator(event, i)}
                 ></span>
             {/if}
@@ -306,6 +310,10 @@ const diselectSeparator = () => {
     .pane-separator:hover {
         background-color: rgb(148, 148, 148);
         transition: 0.1s;
+    }
+
+    .separator-active {
+        background-color: rgb(223, 223, 223) !important;
     }
 
     .nvjs-chart {

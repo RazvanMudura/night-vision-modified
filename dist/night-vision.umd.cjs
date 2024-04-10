@@ -171,6 +171,9 @@ var __publicField = (obj, key, value) => {
     text2.data = /** @type {string} */
     data;
   }
+  function toggle_class(element2, name, toggle) {
+    element2.classList.toggle(name, !!toggle);
+  }
   function custom_event(type, detail, { bubbles = false, cancelable = false } = {}) {
     return new CustomEvent(type, { detail, bubbles, cancelable });
   }
@@ -5423,13 +5426,20 @@ If not the case just use 'lite' tag: ${VERSION}-lite`
     }
     const hs = gridHs();
     let specs = (i2) => {
-      console.log(hs[i2], sizes[i2], minHeight$1);
+      let paneHeight = hs[i2];
+      if (typeof sizes !== void 0 && Array.isArray(sizes)) {
+        if (hs[i2] + sizes[i2] < minHeight$1) {
+          paneHeight = minHeight$1;
+        } else {
+          paneHeight = hs[i2] + sizes[i2];
+        }
+      }
       return {
         hub,
         meta,
         props,
         settings: panes[i2].settings,
-        height: sizes ? hs[i2] + sizes[i2] < minHeight$1 ? minHeight$1 : hs[i2] + sizes[i2] : hs[i2]
+        height: paneHeight
       };
     };
     let mainGm = new GridMaker(
@@ -11536,12 +11546,12 @@ If not the case just use 'lite' tag: ${VERSION}-lite`
     }
   }
   function add_css$1(target) {
-    append_styles(target, "svelte-ex1izl", ".pane-separator.svelte-ex1izl{height:3px !important;width:100% !important;background-color:rgb(80, 80, 80);display:block;position:absolute;z-index:100;cursor:n-resize;transition:0.1s}.pane-separator.svelte-ex1izl:hover{background-color:rgb(148, 148, 148);transition:0.1s}.nvjs-chart.svelte-ex1izl{height:100% !important}");
+    append_styles(target, "svelte-s3aopo", ".pane-separator.svelte-s3aopo{height:3px !important;width:100% !important;background-color:rgb(80, 80, 80);display:block;position:absolute;z-index:100;cursor:n-resize;transition:0.1s}.pane-separator.svelte-s3aopo:hover{background-color:rgb(148, 148, 148);transition:0.1s}.separator-active.svelte-s3aopo{background-color:rgb(223, 223, 223) !important}.nvjs-chart.svelte-s3aopo{height:100% !important}");
   }
   function get_each_context(ctx, list, i) {
     const child_ctx = ctx.slice();
-    child_ctx[33] = list[i];
-    child_ctx[35] = i;
+    child_ctx[34] = list[i];
+    child_ctx[36] = i;
     return child_ctx;
   }
   function create_else_block(ctx) {
@@ -11588,7 +11598,7 @@ If not the case just use 'lite' tag: ${VERSION}-lite`
     let current;
     let each_value = ensure_array_like(
       /*hub*/
-      ctx[3].panes()
+      ctx[4].panes()
     );
     let each_blocks = [];
     for (let i = 0; i < each_value.length; i += 1) {
@@ -11601,7 +11611,7 @@ If not the case just use 'lite' tag: ${VERSION}-lite`
       props: {
         props: (
           /*chartProps*/
-          ctx[2]
+          ctx[3]
         ),
         layout: (
           /*layout*/
@@ -11628,11 +11638,11 @@ If not the case just use 'lite' tag: ${VERSION}-lite`
         current = true;
       },
       p(ctx2, dirty) {
-        if (dirty[0] & /*selectSeparator, hub, layout, chartProps*/
-        30) {
+        if (dirty[0] & /*activeSeparator, selectSeparator, hub, layout, chartProps*/
+        62) {
           each_value = ensure_array_like(
             /*hub*/
-            ctx2[3].panes()
+            ctx2[4].panes()
           );
           let i;
           for (i = 0; i < each_value.length; i += 1) {
@@ -11655,9 +11665,9 @@ If not the case just use 'lite' tag: ${VERSION}-lite`
         }
         const botbar_changes = {};
         if (dirty[0] & /*chartProps*/
-        4)
+        8)
           botbar_changes.props = /*chartProps*/
-          ctx2[2];
+          ctx2[3];
         if (dirty[0] & /*layout*/
         2)
           botbar_changes.layout = /*layout*/
@@ -11697,9 +11707,9 @@ If not the case just use 'lite' tag: ${VERSION}-lite`
     function mousedown_handler(...args) {
       return (
         /*mousedown_handler*/
-        ctx[16](
+        ctx[17](
           /*i*/
-          ctx[35],
+          ctx[36],
           ...args
         )
       );
@@ -11707,7 +11717,14 @@ If not the case just use 'lite' tag: ${VERSION}-lite`
     return {
       c() {
         span = element("span");
-        attr(span, "class", "pane-separator svelte-ex1izl");
+        attr(span, "class", "pane-separator svelte-s3aopo");
+        toggle_class(
+          span,
+          "separator-active",
+          /*activeSeparator*/
+          ctx[2] === /*i*/
+          ctx[36]
+        );
       },
       m(target, anchor) {
         insert(target, span, anchor);
@@ -11718,6 +11735,16 @@ If not the case just use 'lite' tag: ${VERSION}-lite`
       },
       p(new_ctx, dirty) {
         ctx = new_ctx;
+        if (dirty[0] & /*activeSeparator*/
+        4) {
+          toggle_class(
+            span,
+            "separator-active",
+            /*activeSeparator*/
+            ctx[2] === /*i*/
+            ctx[36]
+          );
+        }
       },
       d(detaching) {
         if (detaching) {
@@ -11733,8 +11760,8 @@ If not the case just use 'lite' tag: ${VERSION}-lite`
     let t;
     let show_if = (
       /*i*/
-      ctx[35] < /*hub*/
-      ctx[3].panes().length - 1
+      ctx[36] < /*hub*/
+      ctx[4].panes().length - 1
     );
     let if_block_anchor;
     let current;
@@ -11742,23 +11769,23 @@ If not the case just use 'lite' tag: ${VERSION}-lite`
       props: {
         id: (
           /*i*/
-          ctx[35]
+          ctx[36]
         ),
         layout: (
           /*layout*/
           ctx[1].grids[
             /*i*/
-            ctx[35]
+            ctx[36]
           ]
         ),
         props: (
           /*chartProps*/
-          ctx[2]
+          ctx[3]
         ),
         main: (
           /*pane*/
-          ctx[33] === /*hub*/
-          ctx[3].chart
+          ctx[34] === /*hub*/
+          ctx[4].chart
         )
       }
     });
@@ -11786,12 +11813,12 @@ If not the case just use 'lite' tag: ${VERSION}-lite`
           pane_1_changes.layout = /*layout*/
           ctx2[1].grids[
             /*i*/
-            ctx2[35]
+            ctx2[36]
           ];
         if (dirty[0] & /*chartProps*/
-        4)
+        8)
           pane_1_changes.props = /*chartProps*/
-          ctx2[2];
+          ctx2[3];
         pane_1.$set(pane_1_changes);
         if (show_if)
           if_block.p(ctx2, dirty);
@@ -11841,7 +11868,7 @@ If not the case just use 'lite' tag: ${VERSION}-lite`
       c() {
         div = element("div");
         if_block.c();
-        attr(div, "class", "nvjs-chart svelte-ex1izl");
+        attr(div, "class", "nvjs-chart svelte-s3aopo");
       },
       m(target, anchor) {
         insert(target, div, anchor);
@@ -11853,13 +11880,13 @@ If not the case just use 'lite' tag: ${VERSION}-lite`
               div,
               "mousemove",
               /*dragSeparator*/
-              ctx[5]
+              ctx[6]
             ),
             listen(
               div,
               "mouseup",
               /*diselectSeparator*/
-              ctx[6]
+              ctx[7]
             )
           ];
           mounted = true;
@@ -11974,7 +12001,7 @@ If not the case just use 'lite' tag: ${VERSION}-lite`
     });
     function onCursorChanged($cursor, emit = true) {
       if ($cursor.mode)
-        $$invalidate(15, cursor.mode = $cursor.mode, cursor);
+        $$invalidate(16, cursor.mode = $cursor.mode, cursor);
       if (cursor.mode !== "explore") {
         cursor.xSync(hub, layout, chartProps, $cursor);
         if ($cursor.visible === false) {
@@ -11988,7 +12015,7 @@ If not the case just use 'lite' tag: ${VERSION}-lite`
     function onCursorLocked(state) {
       if (cursor.scrollLock && state)
         return;
-      $$invalidate(15, cursor.locked = state, cursor);
+      $$invalidate(16, cursor.locked = state, cursor);
     }
     function onRangeChanged($range, emit = true) {
       if (emit)
@@ -12015,7 +12042,7 @@ If not the case just use 'lite' tag: ${VERSION}-lite`
         scan.updatePanesHash();
       if (scan.panesChanged())
         return fullUpdate(opt);
-      $$invalidate(15, cursor);
+      $$invalidate(16, cursor);
       $$invalidate(1, layout = new Layout(chartProps, hub, meta, sizes));
       if (Array.isArray(layout.grids))
         paneHeights = layout.grids.map((e) => e.height);
@@ -12026,8 +12053,8 @@ If not the case just use 'lite' tag: ${VERSION}-lite`
     }
     function fullUpdate(opt = {}) {
       let prevIbMode = scan.ibMode;
-      $$invalidate(12, interval = scan.detectInterval());
-      $$invalidate(13, timeFrame = scan.getTimeframe());
+      $$invalidate(13, interval = scan.detectInterval());
+      $$invalidate(14, timeFrame = scan.getTimeframe());
       let ibc = scan.ibMode !== prevIbMode;
       if (!range.length || opt.resetRange || ibc) {
         rangeUpdate(scan.defaultRange());
@@ -12044,19 +12071,21 @@ If not the case just use 'lite' tag: ${VERSION}-lite`
       events.emit("remake-grid");
     }
     function rangeUpdate($range) {
-      $$invalidate(14, range = $range);
+      $$invalidate(15, range = $range);
       $$invalidate(
-        2,
+        3,
         chartProps.range = range,
         // Instant update
         chartProps
       );
     }
+    let activeSeparator = null;
     let selectedPaneIndex = null;
     let yMouseCords = 0;
     const selectSeparator = (event, index) => {
       selectedPaneIndex = index;
       yMouseCords = event.y;
+      $$invalidate(2, activeSeparator = index);
     };
     const dragSeparator = (event) => {
       if (selectedPaneIndex === null)
@@ -12081,6 +12110,7 @@ If not the case just use 'lite' tag: ${VERSION}-lite`
     };
     const diselectSeparator = () => {
       selectedPaneIndex = null;
+      $$invalidate(2, activeSeparator = null);
       yMouseCords = 0;
     };
     const mousedown_handler = (i, event) => selectSeparator(event, i);
@@ -12090,13 +12120,14 @@ If not the case just use 'lite' tag: ${VERSION}-lite`
     };
     $$self.$$.update = () => {
       if ($$self.$$.dirty[0] & /*interval, timeFrame, range, cursor, props*/
-      61441) {
-        $$invalidate(2, chartProps = Object.assign({ interval, timeFrame, range, ctx, cursor }, props));
+      122881) {
+        $$invalidate(3, chartProps = Object.assign({ interval, timeFrame, range, ctx, cursor }, props));
       }
     };
     return [
       props,
       layout,
+      activeSeparator,
       chartProps,
       hub,
       selectSeparator,
@@ -12125,30 +12156,30 @@ If not the case just use 'lite' tag: ${VERSION}-lite`
         safe_not_equal,
         {
           props: 0,
-          getLayout: 7,
-          getRange: 8,
-          getCursor: 9,
-          setRange: 10,
-          setCursor: 11
+          getLayout: 8,
+          getRange: 9,
+          getCursor: 10,
+          setRange: 11,
+          setCursor: 12
         },
         add_css$1,
         [-1, -1]
       );
     }
     get getLayout() {
-      return this.$$.ctx[7];
-    }
-    get getRange() {
       return this.$$.ctx[8];
     }
-    get getCursor() {
+    get getRange() {
       return this.$$.ctx[9];
     }
-    get setRange() {
+    get getCursor() {
       return this.$$.ctx[10];
     }
-    get setCursor() {
+    get setRange() {
       return this.$$.ctx[11];
+    }
+    get setCursor() {
+      return this.$$.ctx[12];
     }
   }
   function add_css(target) {

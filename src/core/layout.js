@@ -63,15 +63,22 @@ function Layout(props, hub, meta, sizes) {
 
 
     let specs = i => {
-        
-        console.log(hs[i], sizes[i], minHeight)
+        let paneHeight = hs[i] 
 
+
+        if (typeof sizes !== undefined && Array.isArray(sizes)) {
+            if (hs[i] + sizes[i] < minHeight) {
+                paneHeight = minHeight
+            } 
+            else {
+                paneHeight = hs[i] + sizes[i]
+            }
+        }
+
+             
         return ({
             hub, meta, props, settings: panes[i].settings,
-            height: sizes ? 
-                hs[i] + sizes[i] < minHeight ? 
-                minHeight : hs[i] + sizes[i] : 
-            hs[i]
+            height: paneHeight
         })
     }
 
