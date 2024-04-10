@@ -12092,6 +12092,7 @@ If not the case just use 'lite' tag: ${VERSION}-lite`
     const dragSeparator = (event) => {
       if (selectedPaneIndex === null)
         return;
+      console.log(paneHeights, selectedPaneIndex);
       if (event.y > yMouseCords) {
         if (paneHeights[selectedPaneIndex + 1] !== minHeight)
           sizes[selectedPaneIndex] += event.y - yMouseCords;
