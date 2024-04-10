@@ -11763,7 +11763,7 @@ If not the case just use 'lite' tag: ${VERSION}-lite`
     let show_if = (
       /*i*/
       ctx[36] < /*hub*/
-      ctx[4].panes().length - 1
+      ctx[4].panes().length
     );
     let if_block_anchor;
     let current;
@@ -12052,7 +12052,6 @@ If not the case just use 'lite' tag: ${VERSION}-lite`
       events.emitSpec("botbar", "update-bb", layout);
       if (emit)
         events.emit("$chart-update");
-      console.log("- - - PANE NUMBER", hub.panes().length - 1);
     }
     function fullUpdate(opt = {}) {
       let prevIbMode = scan.ibMode;

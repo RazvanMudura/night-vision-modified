@@ -170,8 +170,6 @@ function update(opt = {}, emit = true) {
     events.emitSpec('botbar', 'update-bb', layout)
 
     if (emit) events.emit('$chart-update')
-
-    console.log("- - - PANE NUMBER", hub.panes().length - 1)
 }
 
 // Full update when the dataset changed completely
@@ -284,7 +282,7 @@ const diselectSeparator = () => {
 
 
 
-            {#if i < hub.panes().length - 1}
+            {#if i < hub.panes().length}
                 <!-- svelte-ignore a11y-click-events-have-key-events -->
                 <!-- svelte-ignore a11y-no-static-element-interactions -->
                 <span 

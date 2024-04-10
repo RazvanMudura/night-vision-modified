@@ -1,6 +1,6 @@
 /* NightVisionCharts v0.4.2 | License: MIT
  © 2022 ChartMaster. All rights reserved */
-import { g as getDefaultExportFromCjs } from "./index-ff8e32b2.js";
+import { g as getDefaultExportFromCjs } from "./index-7b1af420.js";
 function _mergeNamespaces(n, m) {
   for (var i = 0; i < m.length; i++) {
     const e = m[i];
