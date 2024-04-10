@@ -5412,6 +5412,7 @@ function Layout(props, hub, meta, sizes) {
   );
   let gms = [mainGm];
   for (var [i, pane] of panes.entries()) {
+    console.log(i, specs(i).height);
     if (i !== hub.mainPaneId) {
       gms.push(
         new GridMaker(
@@ -6347,8 +6348,8 @@ class Input {
     });
   }
   async listeners() {
-    const Hamster = await import("./hamster-15771c55.js").then((n) => n.h);
-    const Hammer = await import("./hammer-510387d0.js").then((n) => n.h);
+    const Hamster = await import("./hamster-05a81f07.js").then((n) => n.h);
+    const Hammer = await import("./hammer-a951a3fe.js").then((n) => n.h);
     this.hm = Hamster.default(this.canvas);
     this.hm.wheel((event, delta) => this.mousezoom(-delta * 50, event));
     let mc = this.mc = new Hammer.Manager(this.canvas);
@@ -8347,7 +8348,7 @@ function instance$9($$self, $$props, $$invalidate) {
     }
   }
   async function listeners() {
-    const Hammer = await import("./hammer-510387d0.js").then((n) => n.h);
+    const Hammer = await import("./hammer-a951a3fe.js").then((n) => n.h);
     mc = new Hammer.Manager(canvas);
     mc.add(new Hammer.Pan({
       direction: Hammer.DIRECTION_VERTICAL,
@@ -11991,6 +11992,7 @@ function instance$1($$self, $$props, $$invalidate) {
       return fullUpdate(opt);
     $$invalidate(15, cursor);
     $$invalidate(1, layout = new Layout(chartProps, hub, meta, sizes));
+    console.log(layout.grids);
     if (Array.isArray(layout.grids))
       paneHeights = layout.grids.map((e) => e.height);
     events.emit("update-pane", layout);

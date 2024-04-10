@@ -5435,6 +5435,7 @@ If not the case just use 'lite' tag: ${VERSION}-lite`
     );
     let gms = [mainGm];
     for (var [i, pane] of panes.entries()) {
+      console.log(i, specs(i).height);
       if (i !== hub.mainPaneId) {
         gms.push(
           new GridMaker(
@@ -12014,6 +12015,7 @@ If not the case just use 'lite' tag: ${VERSION}-lite`
         return fullUpdate(opt);
       $$invalidate(15, cursor);
       $$invalidate(1, layout = new Layout(chartProps, hub, meta, sizes));
+      console.log(layout.grids);
       if (Array.isArray(layout.grids))
         paneHeights = layout.grids.map((e) => e.height);
       events.emit("update-pane", layout);

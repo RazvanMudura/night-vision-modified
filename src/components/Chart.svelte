@@ -88,6 +88,7 @@ onMount(() => {
 
     layout = new Layout(chartProps, hub, meta)
 
+
     if (Array.isArray(layout.grids)) {
         paneHeights = layout.grids.map(e => e.height)
 
@@ -157,7 +158,10 @@ function update(opt = {}, emit = true) {
     if (opt.updateHash) scan.updatePanesHash()
     if (scan.panesChanged()) return fullUpdate(opt)
     cursor = cursor // Trigger Svelte update
+
     layout = new Layout(chartProps, hub, meta, sizes)
+    console.log(layout.grids)
+
 
     if (Array.isArray(layout.grids))
         paneHeights = layout.grids.map(e => e.height)

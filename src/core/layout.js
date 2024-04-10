@@ -40,6 +40,8 @@ function Layout(props, hub, meta, sizes) {
 
         let hs = Array(n+1).fill(px)
         hs[hub.mainPaneId] = m
+
+
         return hs
 
     }
@@ -75,6 +77,8 @@ function Layout(props, hub, meta, sizes) {
     let gms = [mainGm]
 
     for (var [i, pane] of panes.entries()) {
+        console.log(i, specs(i).height)
+
         if (i !== hub.mainPaneId) {
             gms.push(new GridMaker(
                 i, specs(i), mainGm.getLayout())
