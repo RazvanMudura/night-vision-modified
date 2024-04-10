@@ -5436,7 +5436,6 @@ If not the case just use 'lite' tag: ${VERSION}-lite`
           }
         }
       }
-      console.log("aici", i2, paneHeight, sizes);
       return {
         hub,
         meta,
@@ -11998,6 +11997,7 @@ If not the case just use 'lite' tag: ${VERSION}-lite`
           sizes.push(0);
         }
       }
+      console.log("PANE NUMBER", hub.panes().length - 1);
     });
     onDestroy(() => {
       events.off("chart");

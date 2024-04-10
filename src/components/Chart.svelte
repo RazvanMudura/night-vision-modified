@@ -97,6 +97,9 @@ onMount(() => {
             sizes.push(0)
         }
     }
+
+
+    console.log("PANE NUMBER", hub.panes().length - 1)
 })
 
 
@@ -259,6 +262,7 @@ const diselectSeparator = () => {
 
 
 
+
 </script>
 
 {#key chartRR} <!-- Full chart re-render -->
@@ -276,6 +280,8 @@ const diselectSeparator = () => {
                 props={chartProps}
                 main={pane === hub.chart}
             />
+
+
 
             {#if i < hub.panes().length - 1}
                 <!-- svelte-ignore a11y-click-events-have-key-events -->
