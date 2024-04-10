@@ -67,7 +67,7 @@ function Layout(props, hub, meta, sizes) {
 
 
         if (typeof sizes !== undefined && Array.isArray(sizes)) {
-            if (typeof sizes[i] !== undefined) {
+            if (typeof sizes[i] !== undefined && sizes.length > 0) {
                 if (hs[i] + sizes[i] < minHeight) {
                     paneHeight = minHeight
                 } 
@@ -77,8 +77,6 @@ function Layout(props, hub, meta, sizes) {
             }
         }
 
-
-        console.log("aici", i, paneHeight, sizes)
 
              
         return ({

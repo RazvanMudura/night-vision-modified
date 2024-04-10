@@ -5428,7 +5428,7 @@ If not the case just use 'lite' tag: ${VERSION}-lite`
     let specs = (i2) => {
       let paneHeight = hs[i2];
       if (typeof sizes !== void 0 && Array.isArray(sizes)) {
-        if (typeof sizes[i2] !== void 0) {
+        if (typeof sizes[i2] !== void 0 && sizes.length > 0) {
           if (hs[i2] + sizes[i2] < minHeight$1) {
             paneHeight = minHeight$1;
           } else {
