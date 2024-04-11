@@ -223,9 +223,8 @@ const selectSeparator = (event, index) => {
 
 
 const dragSeparator = (event) => {
-    if (selectedPaneIndex === null) return
+    if (selectedPaneIndex === null || sizes.length === 0) return
 
-    console.log(paneHeights, selectedPaneIndex, sizes)
 
     if (event.y > yMouseCords) {
         if (paneHeights[selectedPaneIndex + 1] !== minHeight)

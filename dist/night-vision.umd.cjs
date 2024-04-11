@@ -12090,9 +12090,8 @@ If not the case just use 'lite' tag: ${VERSION}-lite`
       $$invalidate(2, activeSeparator = index);
     };
     const dragSeparator = (event) => {
-      if (selectedPaneIndex === null)
+      if (selectedPaneIndex === null || sizes.length === 0)
         return;
-      console.log(paneHeights, selectedPaneIndex, sizes);
       if (event.y > yMouseCords) {
         if (paneHeights[selectedPaneIndex + 1] !== minHeight)
           sizes[selectedPaneIndex] += event.y - yMouseCords;
